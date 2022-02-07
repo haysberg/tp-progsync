@@ -1,0 +1,61 @@
+const N = 4;
+
+node XOR1bit (X, Y : bool)
+returns (out : bool)
+let
+    out = X xor Y;
+tel;
+
+node XORnbit (const N : int;
+            X, Y : bool ^ N)
+returns (out : bool ^ N)
+let
+    out[0..N-1] = XOR1bit(X[0..N-1], Y[0..N-1]);
+tel;
+
+node XOR4bit (X, Y : bool ^ N)
+returns (out : bool ^ N)
+let
+    out = XORnbit(N, X, Y);
+tel;
+
+node multiplexeur1bit (a, b, sel : bool)
+returns (out : bool)
+let
+    out = if sel then a else b;
+tel;
+
+node multiplexeurNbit (const N : int;
+            X, Y : bool ^ N;
+            sel : bool)
+returns (out : bool ^ N)
+let
+    out = multiplexeur1bit(X, Y, sel^N);
+tel;
+
+node multiplexeur4bit (X, Y : bool ^ N;
+            sel : bool)
+returns (out : bool ^ N)
+let
+    out = multiplexeur1bit(X, Y, sel^N);
+tel;
+
+-- node porteLineaire(bool ^ N)
+-- returns (out : bool)
+-- let
+    
+-- tel;
+
+node demiAdditionneur(a, b : bool)
+returns (cy, sum : bool)
+let
+    cy = if a and b then 1 else 0;
+    sum = XOR1bit(a,b);
+tel;
+
+node additionneurComplet(a,b,c : bool)
+returns (cy, sum : bool)
+let
+    sum = a xor b xor c;
+    cy = 
+tel;

@@ -1,0 +1,56 @@
+node Count (inp: bool)
+returns (out : int)
+let
+   out = 0 -> (pre(out) + if inp then 1 else 0);
+tel;
+
+node CountR (inp: bool)
+returns (out : int)
+let
+    out = 0 -> (if inp then 1 + pre(out) else 0);
+tel;
+
+node CountIIR(init : int; incr : int; reset : bool)
+returns (out : int)
+let
+    out = init -> (if reset then 0 else pre(out) + incr);
+tel;
+
+node RisingEdge(val : bool)
+returns (rising : bool)
+let
+    rising = false -> (if pre(val) > val then 1 else 0);
+tel;
+
+node FallingEdge(val : bool)
+returns (falling : bool)
+let
+    falling = false -> (if pre(val) < val then 1 else 0);
+tel;
+
+node Fibonacci(reset : bool)
+returns (integer : int)
+let
+    integer = 1 -> (if reset then 1 else pre(integer) + pre(pre(integer)));
+tel;
+
+node Latch(on : bool; off : bool)
+returns (running : bool)
+let
+    running = 0 -> (if off then 0 else if on then 1 else pre(running));
+tel;
+
+node MinMax(input : int)
+returns (min : int; max : int)
+let
+    min = 0 -> (if pre(min) > input then input else pre(min));
+    max = 0 -> (if pre(max) < input then input else pre(max));
+tel;
+
+node Moyenne(input : int)
+returns (moyenne : int);
+var min, max : int;
+let
+    min, max = MinMax(input);
+    moyenne = (min + max) / 2;
+tel;
