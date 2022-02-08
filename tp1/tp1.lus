@@ -40,12 +40,6 @@ let
     out = multiplexeur1bit(X, Y, sel^N);
 tel;
 
--- node porteLineaire(bool ^ N)
--- returns (out : bool)
--- let
-    
--- tel;
-
 node demiAdditionneur(a, b : bool)
 returns (cy, sum : bool)
 let
@@ -53,9 +47,20 @@ let
     sum = XOR1bit(a,b);
 tel;
 
-node additionneurComplet(a,b,c : bool)
-returns (cy, sum : bool)
-let
-    sum = a xor b xor c;
-    cy = 
+-- node additionneurComplet(a,b,c : bool)
+-- returns (cy, sum : bool)
+-- let
+--     sum = a xor b xor c;
+-- tel;
+
+node orLINEAIRE_N (  const n : int  ; tab: bool^N )
+returns ( value : bool ); 
+let 
+   value = with (N<2) then tab[0] else tab[0] or orLINEAIRE_N(N-1, tab[1..N-1]); 
+tel;
+
+node orLINEAIRE_4 (tab: bool^N )
+returns ( value : bool );
+let 
+   value = orLINEAIRE_N( N, tab);
 tel;
