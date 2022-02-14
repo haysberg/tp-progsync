@@ -1,0 +1,17 @@
+node SR1(init, S, R : bool)
+returns (Q: bool);
+let
+    Q = init -> if S then true else if R then false else pre(Q);
+tel
+
+node SR2(init, S, R : bool)
+returns (Q: bool);
+let
+    Q = init -> if R then false else if S then true else pre(Q);
+tel
+
+node obseqsr(init, S, R : bool)
+returns (O : bool);
+let
+    O = SR1(init, S, R) = SR2(init, S, R);
+tel

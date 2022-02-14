@@ -1,0 +1,72 @@
+node add (a,b : bool)
+    returns (r,s : bool);
+let
+    s = a xor b;
+    r = a and b;
+tel
+
+node addnb(const n : int; a,b :bool^n)
+    returns (r,s : bool^n);
+let
+    s = a[0..n-1] xor b[0..n-1];
+    r = a[0..n-1] and b[0..n-1];
+tel
+
+node add4b(a,b :bool^4)
+    returns (r,s : bool^4);
+let
+    r,s = addnb(4,a,b);
+tel
+
+node addCompletV1 (a,b,c : bool)
+    returns (bit0,bit1 : bool);
+let
+    bit0 = a xor b xor c;
+    bit1 = (b and c) or (b and a) or (a and c);
+tel
+
+node addCompletV2 (a,b,c : bool)
+    returns (bit0,bit1 : bool);
+    var r0,s0,r1 : bool;
+let
+    r0,s0 = add(a,b);
+    r1,bit0 = add(s0,c);
+    bit1 = r1 xor r0;
+tel
+
+node addCompletnbit (const n : int; a,b : bool^n; c: bool)
+    returns (sum : bool^(n+1));
+    var s,r : bool;
+let
+    s,r = if n=0 then (0,0) else addCompletV1(a[0],b[0],c);
+    sum = with n<2 then [s,r] else [s] | addCompletnbit(n-1,a[1..n-1],b[1..n-1],r);
+tel
+
+node addComplet4bit ( a,b : bool^4; c: bool)
+    returns (sum : bool^5);
+let
+    sum = addCompletnbit(4,a,b,c);
+tel
+
+node addernbit (const n : int; a : bool^n; c: bool)
+    returns (sum : bool^(n+1));
+    var s,r : bool;
+let
+    s,r = if n=0 then (0,0) else addCompletV1(a[0],false,c);
+    sum = with n<2 then [s,r] else [s] | addernbit(n-1,a[1..n-1],r);
+tel
+
+node adder8bit( a : bool^8; b : bool)
+    returns (sum : bool^9);
+let 
+    sum = addernbit(8,a,b);
+tel
+
+node obsadd(a,b,c : bool)
+returns(O : bool);
+var c1, r1, c2, r2 : bool;
+let
+    c1, r1 = addCompletV1(a,b,c);
+    c2, r2 = addCompletV2(a,b,c);
+    O = c1 = c2 and r1 = r2;
+tel

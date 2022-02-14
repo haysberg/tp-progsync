@@ -1,0 +1,13 @@
+node RisingEdge(val : bool)
+returns (rising : bool)
+let
+    rising = false -> (not(pre(val)) and val);
+tel;
+
+node obsRE(val : bool)
+returns (test : bool)
+var tmp : bool;
+let
+    tmp = RisingEdge(val);
+    test = not(tmp and pre(tmp));
+tel;

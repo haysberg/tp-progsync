@@ -1,0 +1,11 @@
+node obs1 ( a : bool )
+returns ( o : bool );
+let
+    o = a or not a ;
+tel
+
+node obs2 ( a, b, c : bool )
+returns ( o : bool ) ;
+let
+    o = a or ( b and c ) ;
+tel
