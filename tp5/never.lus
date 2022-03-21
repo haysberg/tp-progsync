@@ -1,0 +1,5 @@
+node never ( a : bool)
+returns (never : bool)
+let
+   never = true -
+tel;
